@@ -11,8 +11,9 @@ class Todo (db.Model):
     TodoEndDate = db.Column(db.DateTime, nullable=False)
 
 
-    def returnJson(self):
+    def toJson(self):
         return {
+            'ID': self.TodoID,
             'Title': self.TodoTitle,
             'Description': self.TodoDescription,
             'StartDate': self.TodoStartDate,

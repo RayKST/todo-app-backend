@@ -1,11 +1,9 @@
 from app import app
 from models import Todo
-import json
 
 
-@app.route('/', methods=['GET'])
+@app.route('/api/task', methods=['GET'])
 def index ():
-    print(Todo.query.all()[0].returnJson())
-    return {
-        'statusCode': 200
-    }
+    tasks = Todo.query.all() 
+    #print(request.args.get('id', default = 1, type = int))
+    return {"tasks": [task.toJson() for task in tasks]}
