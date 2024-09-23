@@ -25,14 +25,13 @@ def index ():
         
         # Update the task attributes with new data
         if 'Title' in data:
-            task.Title = data['Title']
+            task.TodoTitle = data['Title']
         if 'Description' in data:
-            task.Description = data['Description']
-        
-        #task.StartDate = datetime.now()
-        
-        #task.EndDate = datetime.now()
-        
+            task.TodoDescription = data['Description']
+        if 'StartDate' in data:
+            task.TodoStartDate = datetime.fromisoformat(data['StartDate'])
+        if 'EndDate' in data:
+            task.TodoEndDate = datetime.fromisoformat(data['EndDate'])   
         
         try:
             db.session.commit()        
