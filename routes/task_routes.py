@@ -4,7 +4,7 @@ from flask import request
 from models import db, Todo
 
 
-@app.route('/api/task', methods=['GET', 'PUT'])
+@app.route('/api/task', methods=['GET', 'PUT', 'POST'])
 def index ():
     taskID = request.args.get('taskID')
     if request.method == 'GET':
@@ -39,3 +39,21 @@ def index ():
         except Exception as e:
             db.session.rollback()  # Rollback the session on error
             return {"error": str(e)}, 500  # Return the error message
+
+
+    elif request.method == 'POST':
+        data = request.get_json()
+        try:
+            task = Todo(TodoTitle = data['Title'], 
+                        TodoDescription = data['Description'],
+                        TodoStartDate = data['StartDate'],
+                        TodoEndDate = data['EndDate']
+                        )
+            
+            db.session.add()
+            db.session.commit()        
+            return task.toJson(), 200
+        
+        except Exception as e:
+            db.session.rollback()
+            return {"error": str(e)}, 500
