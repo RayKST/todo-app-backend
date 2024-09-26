@@ -4,7 +4,7 @@ from flask import request
 from models import db, Todo
 
 
-@app.route('/api/task', methods=['GET', 'PUT', 'POST'])
+@app.route('/api/task', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def index ():
     taskID = request.args.get('taskID')
     if request.method == 'GET':
@@ -57,3 +57,14 @@ def index ():
         except Exception as e:
             db.session.rollback()
             return {"error": str(e)}, 500
+        
+    elif request.method == 'DELETE':
+        taskID = request.args.get('taskID')
+        task = Todo.query.filter_by(TodoID=taskID).first()
+
+        if not task:
+            return {"error": "Task not found"}, 404
+        else:
+            db.session.delete(task)
+            db.session.commit()
+            return {'message': 'Task deleted'}, 200
