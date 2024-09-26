@@ -46,11 +46,11 @@ def index ():
         try:
             task = Todo(TodoTitle = data['Title'], 
                         TodoDescription = data['Description'],
-                        TodoStartDate = data['StartDate'],
-                        TodoEndDate = data['EndDate']
+                        TodoStartDate = datetime.fromisoformat(data['StartDate']),
+                        TodoEndDate = datetime.fromisoformat(data['EndDate'])
                         )
             
-            db.session.add()
+            db.session.add(task)
             db.session.commit()        
             return task.toJson(), 200
         
