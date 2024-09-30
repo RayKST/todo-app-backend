@@ -5,7 +5,7 @@ from models import db, Todo
 
 
 @app.route('/api/task', methods=['GET', 'PUT', 'POST', 'DELETE'])
-def index ():
+def task ():
     taskID = request.args.get('taskID')
     if request.method == 'GET':
         if not (taskID):

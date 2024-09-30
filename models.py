@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
@@ -36,4 +37,7 @@ class User (db.Model):
         }
 
     def createPasswordHash (self, password):
-        return False
+        self.UserPassword = generate_password_hash(password)
+
+    def decodePasswordHash (self, password):
+        return check_password_hash(self.UserPassword, password)
