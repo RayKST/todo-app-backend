@@ -1,14 +1,12 @@
 import requests
 
 
-url = 'http://127.0.0.1:5001/api/task'
+url = 'http://127.0.0.1:5001/api/login?userID=1'
 bodyJson = {
-  "Title": "Teste insert",
-  "Description": "tarefona em pai",
-  "StartDate": "2024-09-24",
-  "EndDate": "2024-10-01"
+  "Login": "adm",
+  "Password": "admk"
 }
 
-response = requests.post(url, json = bodyJson)
+response = requests.get(url, json = bodyJson)
 
 print(response.text)

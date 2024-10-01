@@ -36,19 +36,23 @@ def user ():
         
     elif request.method == 'POST':
         data = request.get_json()
-        try:
-            user = User(UserLogin = data['Login'], 
-                        UserPassword = User.createPasswordHash(data['Password'])
-                        )
+        userVerify = User.query.filter_by(UserLogin=data['Login']).first()
+
+        if not userVerify:
+            try:
+                user = User(UserLogin = data['Login'])
+                user.createPasswordHash(data['Password'])        
+                
+                db.session.add(user)
+                db.session.commit()        
+                return user.toJson(), 200
             
-            db.session.add(user)
-            db.session.commit()        
-            return user.toJson(), 200
-        
-        except Exception as e:
-            db.session.rollback()
-            return {"error": str(e)}, 500
-        
+            except Exception as e:
+                db.session.rollback()
+                return {"error": str(e)}, 500
+        else:
+            return {"error": "Login already in the system"}, 400    
+            
     elif request.method == 'DELETE':
         user = User.query.filter_by(UserID=userID).first()
 
@@ -65,9 +69,9 @@ def user ():
 @app.route('/api/login', methods=['GET'])
 def login ():
     if request.method == 'GET':
-        userID = request.args.get('userID')
         data = request.get_json()
-
-        user = User.query.filter_by(UserID = userID)
-        if (user.Login == data['Login'] and user.decodePasswordHash(data['password'])):
-            return True
+        user = User.query.filter_by(UserLogin=data['Login']).first()
+        if (user.decodePasswordHash(data['Password'])):
+            return {'Status': True}, 200
+        else:
+            return {'Status': False}, 400
