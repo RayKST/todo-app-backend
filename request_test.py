@@ -1,10 +1,10 @@
-import requests
+import requests 
 
 
-url = 'http://127.0.0.1:5001/api/login?userID=1'
+url = 'http://127.0.0.1:5001/api/login'
 bodyJson = {
-  "Login": "adm",
-  "Password": "admk"
+  "Login": "admin",
+  "Password": "adm"
 }
 
 response = requests.get(url, json = bodyJson)

@@ -66,12 +66,15 @@ def user ():
 
 
 
-@app.route('/api/login', methods=['GET'])
+@app.route('/api/login', methods=['POST'])
 def login ():
-    if request.method == 'GET':
+    if request.method == 'POST':
         data = request.get_json()
         user = User.query.filter_by(UserLogin=data['Login']).first()
-        if (user.decodePasswordHash(data['Password'])):
-            return {'Status': True}, 200
+        if user:
+            if (user.decodePasswordHash(data['Password'])):
+                return {'Status': True}, 200
+            else:
+                return {'Status': False}, 400
         else:
             return {'Status': False}, 400
