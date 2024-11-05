@@ -1,10 +1,12 @@
+import config_app as ca
+
 from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
 from models import db
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = ca.SQLITE_PATH
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 

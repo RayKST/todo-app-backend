@@ -75,6 +75,8 @@ def login ():
             if (user.decodePasswordHash(data['Password'])):
                 return {'Status': True}, 200
             else:
-                return {'Status': False}, 400
+                return {'Status': False,
+                        'Message': 'Invalid Password'}, 400
         else:
-            return {'Status': False}, 400
+            return {'Status': False,
+                    'Message': 'Invalid Login'}, 400

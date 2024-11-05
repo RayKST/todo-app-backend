@@ -3,10 +3,10 @@ import requests
 
 url = 'http://127.0.0.1:5001/api/login'
 bodyJson = {
-  "Login": "admin",
+  "Login": "adm",
   "Password": "adm"
 }
 
-response = requests.get(url, json = bodyJson)
+response = requests.post(url, json = bodyJson)
 
 print(response.text)
