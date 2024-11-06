@@ -1,7 +1,7 @@
 from app import app
 from flask import request
 from flask_jwt_extended import (create_access_token)
-from redis import redis_instance, store_token_in_redis
+from redis_worker import redis_instance, store_token_in_redis
 
 from models import User
 
@@ -29,5 +29,5 @@ def token ():
 @app.route('/api/redis')
 def hello():
     redis_instance.incr('hits')
-    counter = str(redis_instance.get('hits'),'utf-8')
+    counter = redis_instance.get('hits')
     return "Welcome to this webapage!, This webpage has been viewed "+counter+" time(s)"

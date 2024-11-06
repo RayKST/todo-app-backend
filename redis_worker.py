@@ -4,7 +4,7 @@ from functools import wraps
 from redis import Redis
 import hashlib
 
-redis_instance = Redis(host=ca.REDIS_HOST, port=ca.REDIS_PORT, password=ca.REDIS_PWD, decode_responses=True)
+redis_instance = Redis(host=ca.REDIS_HOST, port=ca.REDIS_PORT, decode_responses=True)
 
 def store_token_in_redis(token):
     key = hashlib.md5(token.encode()).hexdigest()

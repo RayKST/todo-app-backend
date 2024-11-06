@@ -18,4 +18,4 @@ with app.app_context():
 
 migrate = Migrate(app, db)
 
-from routes import task_routes, user_routes
+from routes import task_routes, user_routes, token_routes
