@@ -5,7 +5,7 @@ EXPOSE 5001
 WORKDIR /todo-app-backend
 
 #This command will copy the dependancies and libaries in the requirements.txt to the working directory
-COPY ./requirements.txt /todo-app-backend
+COPY ../requirements.txt /todo-app-backend
 
 
 EXPOSE 5001
@@ -13,7 +13,7 @@ EXPOSE 5001
 RUN pip install -r requirements.txt --no-cache-dir
 
 #This command will copy the files and source code required to run the application
-COPY . /todo-app-backend
+COPY .. /todo-app-backend
 
 #This command will start the Python Flask application Docker container
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "-p", "5001"]

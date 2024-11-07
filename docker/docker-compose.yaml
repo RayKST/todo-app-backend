@@ -5,11 +5,13 @@ services:
      ports:
        - '6379:6379' 
    flask:
-        build: .
+        build: 
+            context: ..
+            dockerfile: docker/Dockerfile
         container_name: flask
         ports:
             - "5001:5001"
         volumes:
-            - .:/code
+            - ..:/code
         depends_on:
             - redis
