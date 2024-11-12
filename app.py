@@ -1,14 +1,15 @@
 import config_app as ca
 
 from flask import Flask
-from flask_cors import CORS
 from flask_migrate import Migrate
 from models import db
+from security import config_app_cors, config_jwt_token
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = ca.SQLITE_PATH
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+
+config_app_cors(app)
+config_jwt_token(app)
 
 
 db.init_app(app)

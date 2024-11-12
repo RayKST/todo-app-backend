@@ -2,9 +2,10 @@ from app import app
 from datetime import datetime
 from flask import request
 from models import db, Todo
-
+from redis_worker import jwt_required
 
 @app.route('/api/task', methods=['GET', 'PUT', 'POST', 'DELETE'])
+@jwt_required()
 def task ():
     taskID = request.args.get('taskID')
     if request.method == 'GET':

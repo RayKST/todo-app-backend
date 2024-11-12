@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import func
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
@@ -41,3 +42,21 @@ class User (db.Model):
 
     def decodePasswordHash (self, password):
         return check_password_hash(self.UserPassword, password)
+
+
+class TokenBlocklistModel(db.Model):
+    ID = db.Column(db.Integer, primary_key=True)
+    Jti = db.Column(db.String(36), nullable=False, index=True)
+    CreatedAt = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+
+
+    def toJson(self):
+        return {
+            'ID': self.ID,
+            'JTI': self.Jti,
+            'CreatedAt': self.CreatedAt
+        }
+    
+    @classmethod
+    def get_token(cls, jti):
+        return db.session.query(TokenBlocklistModel.id).filter_by(jti=jti).scalar()

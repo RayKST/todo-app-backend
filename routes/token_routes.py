@@ -12,6 +12,7 @@ def token ():
         password = request.args.get("password")
         
         user = User.query.filter_by(UserLogin=username).first()
+        print(u.decodePasswordHash(password) for u in user)
         if not user or not user.decodePasswordHash(password):
             return {"Message": "Invalid username or password",
                     "Status": False}, 401
