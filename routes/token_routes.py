@@ -8,11 +8,12 @@ from models import User
 @app.route('/api/token', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def token ():
     if request.method == 'POST':
-        username = request.args.get("username")
-        password = request.args.get("password")
+        data = request.get_json()
+        username = data["Username"]
+        password = data["Password"]
         
         user = User.query.filter_by(UserLogin=username).first()
-        print(u.decodePasswordHash(password) for u in user)
+        
         if not user or not user.decodePasswordHash(password):
             return {"Message": "Invalid username or password",
                     "Status": False}, 401

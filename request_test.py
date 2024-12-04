@@ -1,12 +1,12 @@
 import requests 
 
 
-url = 'http://127.0.0.1:5001/api/login'
+url = 'http://127.0.0.1:5001/api/token'
 bodyJson = {
-  "Login": "adm",
+  "Username": "adm",
   "Password": "adm"
 }
-
-response = requests.post(url, json = bodyJson)
-
+headers = {"Authorization": "Bearer b6b35dea7053cdd2487bd7cc00ce580f"}
+response = requests.post(url, json = bodyJson)#, headers=headers)
+#response = requests.get(url, headers=headers)
 print(response.text)
