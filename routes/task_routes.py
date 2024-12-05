@@ -29,6 +29,8 @@ def task ():
             task.TodoTitle = data['Title']
         if 'Description' in data:
             task.TodoDescription = data['Description']
+        if 'Status' in data:
+            task.TodoStatusID = data['Status']
         if 'StartDate' in data:
             task.TodoStartDate = datetime.fromisoformat(data['StartDate'])
         if 'EndDate' in data:
@@ -47,6 +49,7 @@ def task ():
         try:
             task = Todo(TodoTitle = data['Title'], 
                         TodoDescription = data['Description'],
+                        TodoOwnerID = data['OwnerID'],
                         TodoStartDate = datetime.fromisoformat(data['StartDate']),
                         TodoEndDate = datetime.fromisoformat(data['EndDate'])
                         )

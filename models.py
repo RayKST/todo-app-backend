@@ -11,6 +11,8 @@ class Todo (db.Model):
     TodoID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     TodoTitle = db.Column(db.String(50), nullable=True)
     TodoDescription = db.Column(db.String(150), nullable=True)
+    TodoOwnerID = db.Column(db.Integer, db.ForeignKey('user.UserID'))
+    TodoStatusID = db.Column(db.Integer, db.ForeignKey('todostatus.StatusID'), default = 1)
     TodoStartDate = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
     TodoEndDate = db.Column(db.DateTime, nullable=True)
 
@@ -20,6 +22,8 @@ class Todo (db.Model):
             'ID': self.TodoID,
             'Title': self.TodoTitle,
             'Description': self.TodoDescription,
+            'OwnerID': self.TodoOwnerID,
+            'StatusID': self.TodoStatusID,
             'StartDate': self.TodoStartDate,
             'EndDate': self.TodoEndDate
         }
@@ -60,3 +64,15 @@ class TokenBlocklistModel(db.Model):
     @classmethod
     def get_token(cls, jti):
         return db.session.query(TokenBlocklistModel.id).filter_by(jti=jti).scalar()
+    
+
+class TodoStatus (db.Model):
+    __tablename__ = 'todostatus'
+    StatusID = db.Column(db.Integer, primary_key=True)
+    StatusDescription = db.Column(db.String(50), nullable=True)
+
+    def toJson(self):
+        return {
+            'ID': self.StatusID,
+            'Description': self.StatusDescription
+        }
