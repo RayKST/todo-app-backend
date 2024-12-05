@@ -19,4 +19,4 @@ with app.app_context():
 
 migrate = Migrate(app, db, render_as_batch=True)
 
-from routes import task_routes, user_routes, token_routes
+from routes import task_routes, user_routes, token_routes, status_routes
