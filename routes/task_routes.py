@@ -7,17 +7,22 @@ from redis_worker import jwt_required
 @app.route('/api/task', methods=['GET', 'PUT', 'POST', 'DELETE'])
 @jwt_required()
 def task ():
-    taskID = request.args.get('taskID')
     if request.method == 'GET':
-        if not (taskID):
+        taskID = request.args.get('taskID')
+        ownerID = request.args.get('ownerID')
+        print(ownerID, taskID)
+
+        if (not (taskID)) and (not (ownerID)):
             tasks = Todo.query.all() 
             return {"tasks": [task.toJson() for task in tasks]}
-        else:
+        elif taskID:
             tasks = Todo.query.filter_by(TodoID = taskID)
+            return {"tasks": [task.toJson() for task in tasks]}
+        elif ownerID:
+            tasks = Todo.query.filter_by(TodoOwnerID = ownerID)
             return {"tasks": [task.toJson() for task in tasks]}
     
     elif request.method == 'PUT':
-
         data = request.get_json()
         task = Todo.query.filter_by(TodoID=data['ID']).first()
 
