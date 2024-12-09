@@ -10,7 +10,6 @@ def task ():
     if request.method == 'GET':
         taskID = request.args.get('taskID')
         ownerID = request.args.get('ownerID')
-        print(ownerID, taskID)
 
         if (not (taskID)) and (not (ownerID)):
             tasks = Todo.query.all() 
